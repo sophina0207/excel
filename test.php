@@ -3,8 +3,7 @@
 require_once("PHPExcel.php");  
   
 // 通常PHPExcel对象有两种实例化的方式  
-// 1. 通过new关键字创建空白文档  
-$array=array(
+$arr=array(
 		array("排名"=>1,'name'=>'曾川玲1','vote_count'=>22),
 		array("排名"=>2,'name'=>'曾川玲2','vote_count'=>33),
 		array("排名"=>3,'name'=>'曾川玲3','vote_count'=>53),
@@ -38,24 +37,8 @@ $array=array(
 		array("排名"=>31,'name'=>'曾川玲31','vote_count'=>345),
 		array("排名"=>32,'name'=>'曾川玲32','vote_count'=>345),
 );
-$header=array('xuhao','shebei','bianhao','shijian');
+$header=array('序号','名称','投票数');
 $filename='test';
-$records=array(
-		array(
-				'id' =>  '1',
-				'equinumber' =>  'htc123' ,
-				'play_count' =>  '26' ,
-				'play_date' =>  '2016-10-20',
-				'number' =>  1
-		),
-		1 =>
-		array (
-		'id' =>  '2', 
-		'equinumber' =>  'htc321' ,
-		'play_count' =>  '56' ,
-		'play_date' =>  '2016-10-20',
-		'number' =>  2)
-);
 $phpexcel=new PHPExcel();
 $sheet=$phpexcel->getActiveSheet();
 $sheet->setTitle($filename);
@@ -65,28 +48,25 @@ foreach ($header as $key =>$k)
 	//设置head的行高
 	// 			$sheet->getRowDimension($key+1)->setRowHeight(30);
 	//添加head记录
-	$sheet->setCellValueByColumnAndRow();
 	$return=$sheet->setCellValueByColumnAndRow($colum,1,$k,true);
-	// 			var_dump($return);
 	// 			$this->setStyle($colum, $key+1,true);
 	$colum++;
 }
-// 		var_dump($phpexcel);die;
-foreach ($records as $key =>$item)
+foreach ($arr as $key =>$item)
 {
 	$colum=0;
 	foreach ($item as $k =>$v )
 	{
 		//添加每行记录
 		$sheet->setCellValueByColumnAndRow($colum,$key+2,$v);
-		// 				$this->setStyle($colum, $key+2);
 		$colum++;
 	}
 }
+//设置单元格边框
 header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.$filename.'.xls"');
 header('Cache-Control: max-age=0');
-PHPExcel_IOFactory::createWriter($phpexcel, 'Excel5')->save('php://output');
+PHPExcel_IOFactory::createWriter($phpexcel,'excel5')->save('php://output');
 
 
 
