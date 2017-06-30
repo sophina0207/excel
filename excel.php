@@ -40,7 +40,7 @@ class excel{
 			//字体加粗
 			$this->setFontBold( $column, $line);
 			//设置自动宽度
-			$this->setAutoWidt($column);
+			$this->setAutoWidth($column);
 			//设置横向对齐方式
 			$this->setAlign($column, $line,2);
 			//设置边框
@@ -102,7 +102,7 @@ class excel{
 	 * @param string $boolean
 	 * @param unknown $sheet
 	 */
-	public function setAutoWidt($column,$boolean=true,$sheet=''){
+	public function setAutoWidth($column,$boolean=true,$sheet=''){
 		if(empty($sheet)){
 			$sheet = $this->sheet;
 		}
@@ -132,6 +132,29 @@ class excel{
 		$sheet->getStyleByColumnAndRow($column,$line)->getAlignment()->setHorizontal($type);
 	}
 	/**
+	 * 设置单元格垂直方向对齐方式
+	 * @param unknown $column
+	 * @param unknown $line
+	 * @param string $type
+	 * @param string $sheet
+	 */
+	public function setVertical($column,$line,$type='',$sheet=''){
+		if(empty($sheet)){
+			$sheet = $this->sheet;
+		}
+		$type = strtolower($type);
+		switch ($type) {
+			case 'top':
+				$type = PHPExcel_Style_Alignment::VERTICAL_TOP;break;
+			case 'bottom':
+				$type = PHPExcel_Style_Alignment::VERTICAL_BOTTOM;break;
+			default:
+				$type = PHPExcel_Style_Alignment::VERTICAL_CENTER;break;
+		}
+		$sheet->getStyleByColumnAndRow($column,$line)->getAlignment()->setVertical($type);
+		
+	}
+	/**
 	 * 设置边框的样式
 	 * @param unknown $column
 	 * @param unknown $line
@@ -156,6 +179,14 @@ class excel{
 		$sheet->getStyleByColumnAndRow($column,$line)->getBorders()->$border()->setBorderStyle($type);
 		
 	}
+	/**
+	 * 设置单元格的边框颜色
+	 * @param unknown $column
+	 * @param unknown $line
+	 * @param unknown $color
+	 * @param string $border
+	 * @param string $sheet
+	 */
 	public function setBorderColor($column,$line,$color,$border='',$sheet=''){
 		if(empty($sheet)){
 			$sheet = $this->sheet;
