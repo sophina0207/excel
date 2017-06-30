@@ -45,11 +45,7 @@ $sheet->setTitle($filename);
 $colum=0;
 foreach ($header as $key =>$k)
 {
-	//设置head的行高
-	// 			$sheet->getRowDimension($key+1)->setRowHeight(30);
-	//添加head记录
 	$return=$sheet->setCellValueByColumnAndRow($colum,1,$k,true);
-	// 			$this->setStyle($colum, $key+1,true);
 	$colum++;
 }
 foreach ($arr as $key =>$item)
