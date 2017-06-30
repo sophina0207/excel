@@ -4,17 +4,6 @@
 * @date : 2017年6月30日
 * @desc : excel类
 **/
-$excel = new excel();
-$filename = 'test';
-$header = array('header1','header2','header3');
-$data = array(
-			array('row1_column1','row1_column2','row1_column3'),
-			array('row2_column1','row2_column2','row2_column3'),
-			array('row3_column1','row3_column2','row3_column3'),
-			array('row4_column1','row4_column2','row4_column3'),
-		
-);
-$excel->exportFile($filename, $header, $data);
 class excel{
 	protected $sheet;//当前工作sheet
 	protected $phpexcel;
@@ -107,6 +96,18 @@ class excel{
 			$sheet = $this->sheet;
 		}
 		$sheet->getColumnDimensionByColumn($column)->setAutoSize($boolean);
+	}
+	/**
+	 * 设置列的宽度
+	 * @param unknown $column
+	 * @param unknown $value
+	 * @param string $sheet
+	 */
+	public function setWidthValue($column,$value,$sheet=''){
+		if(empty($sheet)){
+			$sheet = $this->sheet;
+		}
+		$sheet->getColumnDimensionByColumn($column)->setWidth($value);		
 	}
 	/**
 	 * 设置横向对齐方式
